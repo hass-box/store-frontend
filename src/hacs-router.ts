@@ -62,16 +62,14 @@ class HacsRouter extends HassRouterPage {
   protected routerOptions: RouterOptions = {
     defaultPage: "dashboard",
     showLoading: true,
-    beforeRender: (page: string) =>
-      !["_my_redirect", "repository"].includes(page) ? "dashboard" : undefined,
     routes: {
       _my_redirect: {
         tag: "hacs-my-redirect",
         load: () => import("./hacs-my-redirect"),
       },
       dashboard: {
-        tag: "hacs-dashboard",
-        load: () => import("./dashboards/hacs-dashboard"),
+        tag: "hassbox-store-dashboard",
+        load: () => import("./store/dashboard/hassbox-store-dashboard"),
         cache: true,
       },
       repository: {
