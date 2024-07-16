@@ -25,6 +25,9 @@ class HassBoxStoreDashBoardRouter extends HassRouterPage {
       store: {
         tag: "hassbox-store-dashboard-store",
       },
+      discover: {
+        tag: "hassbox-store-dashboard-discover",
+      },
       mine: {
         tag: "hassbox-store-dashboard-mine",
       },

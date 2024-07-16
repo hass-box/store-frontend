@@ -64,7 +64,7 @@ export class HacsRepositoryDashboard extends LitElement {
       // Ignore if modifier keys are pressed
       return;
     }
-    if (ev.key === "m" && mainWindow.location.pathname.startsWith("/hacs/repository/")) {
+    if (ev.key === "m" && mainWindow.location.pathname.startsWith("/ha-store/repository/")) {
       if (!this._repository) {
         return;
       }

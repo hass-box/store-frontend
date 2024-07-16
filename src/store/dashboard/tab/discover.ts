@@ -13,7 +13,7 @@ class HassBoxStoreDashboardDiscover extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   protected render(): TemplateResult {
-    return html` <div class="content">hassbox-store-dashboard-mine</div> `;
+    return html` <div class="content">hassbox-store-dashboard-discover</div> `;
   }
 
   static get styles(): CSSResultGroup {

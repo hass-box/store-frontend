@@ -72,6 +72,10 @@ class HacsRouter extends HassRouterPage {
         load: () => import("./store/dashboard/hassbox-store-dashboard"),
         cache: true,
       },
+      addon_detail: {
+        tag: "addon_detail",
+        load: () => import("./dashboards/hacs-repository-dashboard"),
+      },
       repository: {
         tag: "hacs-repository-dashboard",
         load: () => import("./dashboards/hacs-repository-dashboard"),

@@ -35,17 +35,17 @@ class HassBoxStoreDashboard extends LitElement {
     const addonTabs: PageNavigation[] = [
       {
         name: "商店",
-        path: "/hacs/dashboard/store",
+        path: "/ha-store/dashboard/store",
         iconPath: mdiStorefront,
       },
       {
         name: "发现",
-        path: "/hacs/dashboard/discover",
+        path: "/ha-store/dashboard/discover",
         iconPath: mdiFlowerPoppy,
       },
       {
         name: "我的",
-        path: "/hacs/dashboard/mine",
+        path: "/ha-store/dashboard/mine",
         iconPath: mdiAccountCircle,
       },
     ];
@@ -61,7 +61,7 @@ class HassBoxStoreDashboard extends LitElement {
         .route=${route}
         .tabs=${addonTabs}
       >
-        <span slot="header">xxx</span>
+        <span slot="header">HA商店</span>
         <hassbox-store-dashboard-router
           .route=${route}
           .narrow=${this.narrow}

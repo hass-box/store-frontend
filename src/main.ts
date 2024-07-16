@@ -34,10 +34,6 @@ class HacsFrontend extends HacsElement {
       this._setRoute(e as LocationChangedEvent),
     );
 
-    if (this.route.path === "") {
-      navigate("/hacs/entry", { replace: true });
-    }
-
     window.addEventListener("haptic", (ev) => {
       // @ts-ignore
       fireEvent(window.parent, ev.type, ev.detail, {

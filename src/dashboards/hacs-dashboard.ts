@@ -517,7 +517,7 @@ export class HacsDashboard extends LitElement {
     schema.name;
 
   private _handleRowClicked(ev: CustomEvent) {
-    navigate(`/hacs/repository/${ev.detail.id}`);
+    navigate(`/ha-store/repository/${ev.detail.id}`);
   }
 
   private _handleFilterChanged(ev: CustomEvent) {
