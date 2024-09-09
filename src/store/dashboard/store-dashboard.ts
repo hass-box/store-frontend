@@ -8,10 +8,20 @@ import "../../../homeassistant-frontend/src/layouts/hass-tabs-subpage";
 import type { PageNavigation } from "../../../homeassistant-frontend/src/layouts/hass-tabs-subpage";
 import { haStyle } from "../../../homeassistant-frontend/src/resources/styles";
 import { HomeAssistant, Route } from "../../../homeassistant-frontend/src/types";
-import "./hassbox-store-dashboard-router";
+import "./store-dashboard-router";
 
-@customElement("hassbox-store-dashboard")
-class HassBoxStoreDashboard extends LitElement {
+import "../../../homeassistant-frontend/src/components/ha-dialog";
+
+import { checkAccountState } from "../../data/websocket";
+
+import { showAccountLoginDialog } from "../../components/dialogs/show-store-dialog";
+
+import { HassBoxStore } from "../../data/store";
+
+@customElement("store-dashboard")
+class StoreDashboard extends LitElement {
+  @property({ attribute: false }) public store!: HassBoxStore;
+
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public route!: Route;
@@ -19,6 +29,7 @@ class HassBoxStoreDashboard extends LitElement {
   @property({ type: Boolean }) public narrow = false;
 
   private _computeTail = memoizeOne((route: Route) => {
+    console.log("-- store-dashboard");
     const dividerPos = route.path.indexOf("/", 1);
     return dividerPos === -1
       ? {
@@ -35,7 +46,7 @@ class HassBoxStoreDashboard extends LitElement {
     const addonTabs: PageNavigation[] = [
       {
         name: "商店",
-        path: "/ha-store/dashboard/store",
+        path: "/ha-store/dashboard/index",
         iconPath: mdiStorefront,
       },
       {
@@ -62,11 +73,12 @@ class HassBoxStoreDashboard extends LitElement {
         .tabs=${addonTabs}
       >
         <span slot="header">HA商店</span>
-        <hassbox-store-dashboard-router
+        <store-dashboard-router
+          .store=${this.store}
           .route=${route}
           .narrow=${this.narrow}
           .hass=${this.hass}
-        ></hassbox-store-dashboard-router>
+        ></store-dashboard-router>
       </hass-tabs-subpage>
     `;
   }
@@ -109,11 +121,17 @@ class HassBoxStoreDashboard extends LitElement {
     ];
   }
 
-  protected async firstUpdated(): Promise<void> {}
+  protected async firstUpdated(): Promise<void> {
+    console.log("-- firstUpdated");
+    const result = await checkAccountState(this.hass);
+    if (result["status"] != 200) {
+      showAccountLoginDialog(this, { data: result });
+    }
+  }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "hassbox-store-dashboard": HassBoxStoreDashboard;
+    "store-dashboard": StoreDashboard;
   }
 }

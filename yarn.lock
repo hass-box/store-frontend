@@ -6791,6 +6791,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hammerjs@npm:^2":
+  version: 2.0.45
+  resolution: "@types/hammerjs@npm:2.0.45"
+  checksum: 10/8d7f8791789853a9461f6445e625f18922a823a61042161dde5513f4a2c15ecd6361fa6f9b457ce13bfb6b518489b892fedb9e2cebb4420523cb45f1cbb4ee88
+  languageName: node
+  linkType: hard
+
 "@types/hammerjs@npm:^2.0.36":
   version: 2.0.41
   resolution: "@types/hammerjs@npm:2.0.41"
@@ -11788,6 +11795,7 @@ __metadata:
     "@types/chromecast-caf-sender": "npm:1.0.10"
     "@types/color-name": "npm:1.1.4"
     "@types/glob": "npm:8.1.0"
+    "@types/hammerjs": "npm:^2"
     "@types/html-minifier-terser": "npm:7.0.2"
     "@types/js-yaml": "npm:4.0.9"
     "@types/leaflet": "npm:1.9.12"
@@ -11847,6 +11855,7 @@ __metadata:
     gulp-json-transform: "npm:0.5.0"
     gulp-rename: "npm:2.0.0"
     gulp-zopfli-green: "npm:6.0.1"
+    hammerjs: "npm:2.0.8"
     hls.js: "patch:hls.js@npm%3A1.5.7#~/homeassistant-frontend/.yarn/patches/hls.js-npm-1.5.7-f5bbd3d060.patch"
     home-assistant-js-websocket: "npm:9.3.0"
     html-minifier-terser: "npm:7.2.0"
@@ -11861,12 +11870,14 @@ __metadata:
     lint-staged: "npm:15.2.5"
     lit: "npm:2.8.0"
     lit-analyzer: "npm:2.0.3"
+    lit-html: "npm:2.8.0"
     lodash.merge: "npm:4.6.2"
     lodash.template: "npm:4.5.0"
     luxon: "npm:3.4.4"
     magic-string: "npm:0.30.10"
     map-stream: "npm:0.0.7"
     marked: "npm:12.0.2"
+    medium-zoom-element: "npm:0.0.1"
     memoize-one: "npm:6.0.0"
     mocha: "npm:10.4.0"
     node-vibrant: "npm:3.2.1-alpha.1"
@@ -11922,6 +11933,13 @@ __metadata:
     xss: "npm:1.0.15"
   languageName: unknown
   linkType: soft
+
+"hammerjs@npm:2.0.8":
+  version: 2.0.8
+  resolution: "hammerjs@npm:2.0.8"
+  checksum: 10/9155d056f252ef35e8ca258dbb5ee2c9d8794f6805d083da7d1d9763d185e3e149459ecc2b36ccce584e3cd5f099fd9fa55056e3bcc7724046390f2e5ae25815
+  languageName: node
+  linkType: hard
 
 "handle-thing@npm:^2.0.0":
   version: 2.0.1
@@ -13462,21 +13480,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lit-html@npm:2.8.0, lit-html@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "lit-html@npm:2.8.0"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.2"
+  checksum: 10/3503e55e2927c2ff94773cf041fc4128f92291869c9192f36eacb7f95132d11f6b329e5b910ab60a4456349cd2e6d23b33d83291b24d557bcd6b904d6314ac1a
+  languageName: node
+  linkType: hard
+
 "lit-html@npm:^2.7.0":
   version: 2.7.4
   resolution: "lit-html@npm:2.7.4"
   dependencies:
     "@types/trusted-types": "npm:^2.0.2"
   checksum: 10/d773b7919a4d927dc4a3141c9b32b64c859dc1e7064cf5a603aa4cb6736fde2973b4f1a7be238e7df7f0c4340f8dee7e61f570d087cfd2ef83b091626e8c8ee4
-  languageName: node
-  linkType: hard
-
-"lit-html@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "lit-html@npm:2.8.0"
-  dependencies:
-    "@types/trusted-types": "npm:^2.0.2"
-  checksum: 10/3503e55e2927c2ff94773cf041fc4128f92291869c9192f36eacb7f95132d11f6b329e5b910ab60a4456349cd2e6d23b33d83291b24d557bcd6b904d6314ac1a
   languageName: node
   linkType: hard
 
@@ -13807,6 +13825,22 @@ __metadata:
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"
   checksum: 10/38e0984db39139604756903a01397e29e17dcb04207bb3e081412ce725ab17338ecc47220c1b186b6bbe79a658aad1b0d41142884f5a481f36290cdefbe6aa46
+  languageName: node
+  linkType: hard
+
+"medium-zoom-element@npm:0.0.1":
+  version: 0.0.1
+  resolution: "medium-zoom-element@npm:0.0.1"
+  dependencies:
+    medium-zoom: "npm:^0.2.0"
+  checksum: 10/6d0531415bd410db016fe4da8df0bc4f68b882b69fd8a4e5f65c2e660e4bd028b553a0be8d797a0081a971ad1bbee869eac09ac9e048d3c43727d16e8d8fbe7b
+  languageName: node
+  linkType: hard
+
+"medium-zoom@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "medium-zoom@npm:0.2.0"
+  checksum: 10/2be4c1f328b0bfb2c48e24a4f6feb95f8952080ba50f2f4773bba542baeeccf4876d80c9e77ded056d1afdf1b21d4776664a41b49b36bdfbaa5ff1bda05408d6
   languageName: node
   linkType: hard
 

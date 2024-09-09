@@ -14,12 +14,15 @@ import { HacsElement } from "./hacs";
 import "./hacs-router";
 import { HacsStyles } from "./styles/hacs-common-style";
 import { hacsStyleVariables } from "./styles/variables";
+import { HassBoxStore } from "./data/store";
 
 @customElement("hacs-frontend")
 class HacsFrontend extends HacsElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public hacs!: Hacs;
+
+  @property({ attribute: false }) public store!: HassBoxStore;
 
   @property({ attribute: false }) public narrow!: boolean;
 
@@ -95,6 +98,7 @@ class HacsFrontend extends HacsElement {
       <hacs-router
         .hass=${this.hass}
         .hacs=${this.hacs}
+        .store=${this.store}
         .route=${this.route}
         .narrow=${this.narrow}
       ></hacs-router>

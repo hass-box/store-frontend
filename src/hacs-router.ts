@@ -7,10 +7,13 @@ import {
 import type { HomeAssistant, Route } from "../homeassistant-frontend/src/types";
 
 import type { Hacs } from "./data/hacs";
+import { HassBoxStore } from "./data/store";
 
 @customElement("hacs-router")
 class HacsRouter extends HassRouterPage {
   @property({ attribute: false }) public hacs!: Hacs;
+
+  @property({ attribute: false }) public store!: HassBoxStore;
 
   @property({ attribute: false }) public hass!: HomeAssistant;
 
@@ -53,6 +56,7 @@ class HacsRouter extends HassRouterPage {
   protected updatePageEl(el) {
     const isWide = this.hass.dockedSidebar === "docked" ? this._wideSidebar : this._wide;
     el.hass = this.hass;
+    el.store = this.store;
     el.hacs = this.hacs;
     el.route = this.route;
     el.narrow = this.narrow;
@@ -68,13 +72,13 @@ class HacsRouter extends HassRouterPage {
         load: () => import("./hacs-my-redirect"),
       },
       dashboard: {
-        tag: "hassbox-store-dashboard",
-        load: () => import("./store/dashboard/hassbox-store-dashboard"),
+        tag: "store-dashboard",
+        load: () => import("./store/dashboard/store-dashboard"),
         cache: true,
       },
-      addon_detail: {
-        tag: "addon_detail",
-        load: () => import("./dashboards/hacs-repository-dashboard"),
+      detail: {
+        tag: "store-detail-addon",
+        load: () => import("./store/detail/store-detail-addon"),
       },
       repository: {
         tag: "hacs-repository-dashboard",

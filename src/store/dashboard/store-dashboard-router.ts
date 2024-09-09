@@ -6,12 +6,16 @@ import {
 } from "../../../homeassistant-frontend/src/layouts/hass-router-page";
 import { HomeAssistant, Route } from "../../../homeassistant-frontend/src/types";
 
-import "./tab/store";
-import "./tab/discover";
-import "./tab/mine";
+import "./store-dashboard-index";
+import "./store-dashboard-discover";
+import "./store-dashboard-mine";
 
-@customElement("hassbox-store-dashboard-router")
-class HassBoxStoreDashBoardRouter extends HassRouterPage {
+import { HassBoxStore } from "../../data/store";
+
+@customElement("store-dashboard-router")
+class StoreDashBoardRouter extends HassRouterPage {
+  @property({ attribute: false }) public store!: HassBoxStore;
+
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public route!: Route;
@@ -19,30 +23,28 @@ class HassBoxStoreDashBoardRouter extends HassRouterPage {
   @property({ type: Boolean }) public narrow = false;
 
   protected routerOptions: RouterOptions = {
-    defaultPage: "store",
+    defaultPage: "index",
     showLoading: true,
     routes: {
-      store: {
-        tag: "hassbox-store-dashboard-store",
+      index: {
+        tag: "store-dashboard-index",
       },
       discover: {
-        tag: "hassbox-store-dashboard-discover",
+        tag: "store-dashboard-discover",
       },
       mine: {
-        tag: "hassbox-store-dashboard-mine",
+        tag: "store-dashboard-mine",
       },
     },
   };
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
-    console.log("hassbox-store-dashboard-router - firstUpdated");
-    console.log(this.route);
   }
 
   protected updatePageEl(el) {
-    console.log(el);
     el.hass = this.hass;
+    el.store = this.store;
     el.route = this.route;
     el.narrow = this.narrow;
   }
@@ -50,6 +52,6 @@ class HassBoxStoreDashBoardRouter extends HassRouterPage {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "hassbox-store-dashboard-router": HassBoxStoreDashBoardRouter;
+    "store-dashboard-router": StoreDashBoardRouter;
   }
 }

@@ -1,11 +1,11 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 
-import type { HomeAssistant, Route } from "../../../../homeassistant-frontend/src/types";
-import { haStyle } from "../../../../homeassistant-frontend/src/resources/styles";
+import type { HomeAssistant, Route } from "../../../homeassistant-frontend/src/types";
+import { haStyle } from "../../../homeassistant-frontend/src/resources/styles";
 
-@customElement("hassbox-store-dashboard-mine")
-class HassBoxStoreDashboardMine extends LitElement {
+@customElement("store-dashboard-mine")
+class StoreDashboardMine extends LitElement {
   @property({ type: Boolean }) public narrow = false;
 
   @property({ attribute: false }) public route!: Route;
@@ -32,6 +32,6 @@ class HassBoxStoreDashboardMine extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "hassbox-store-dashboard-mine": HassBoxStoreDashboardMine;
+    "store-dashboard-mine": StoreDashboardMine;
   }
 }

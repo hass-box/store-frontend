@@ -20,3 +20,14 @@ const _IconMap = {
 };
 
 export const typeIcon = (type: RepositoryType): string => _IconMap[type];
+
+import { AppType } from "../data/store";
+
+const _StoreIconMap = {
+  integration: mdiPackageVariant,
+  card: mdiViewDashboard,
+  theme: mdiPalette,
+  addon: mdiPalette,
+};
+
+export const typeStoreIcon = (type: AppType): string => _StoreIconMap[type];
