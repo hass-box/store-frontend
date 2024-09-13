@@ -67,6 +67,7 @@ class StoreDashboard extends LitElement {
 
     return html`
       <hass-tabs-subpage
+        main-page
         .hass=${this.hass}
         .narrow=${this.narrow}
         .route=${route}

@@ -33,6 +33,8 @@ import {
   mdiScanner,
   mdiQrcodeScan,
   mdiRoomService,
+  mdiLink,
+  mdiForward,
   mdiDownloadBox,
 } from "@mdi/js";
 
@@ -53,6 +55,22 @@ import "../../../homeassistant-frontend/src/components/ha-switch";
 import "../../../homeassistant-frontend/src/components/ha-faded";
 import "../../../homeassistant-frontend/src/components/ha-checkbox";
 
+import { navigate } from "../../../homeassistant-frontend/src/common/navigate";
+
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
+import { SubscribeMixin } from "../../../homeassistant-frontend/src/mixins/subscribe-mixin";
+
+import {
+  EntityRegistryEntry,
+  subscribeEntityRegistry,
+} from "../../../homeassistant-frontend/src/data/entity_registry";
+
+import {
+  showAlertDialog,
+  showConfirmationDialog,
+} from "../../../homeassistant-frontend/src/dialogs/generic/show-dialog-box";
+import { showAddIntegrationDialog } from "../../../homeassistant-frontend/src/panels/config/integrations/show-add-integration-dialog";
+
 import { showToast } from "../../../homeassistant-frontend/src/util/toast";
 
 import {
@@ -68,6 +86,14 @@ import "medium-zoom-element";
 import { getAppInfo, downloadApp } from "../../data/websocket";
 import { AppInfo } from "../../data/store";
 
+import {
+  HassioHostInfo,
+  fetchHassioHostInfo,
+  rebootHost,
+  shutdownHost,
+} from "../../../homeassistant-frontend/src/data/hassio/host";
+import { string } from "superstruct";
+
 @customElement("store-detail-addon")
 class StoreDetailAddon extends LitElement {
   @property({ type: Boolean, reflect: true }) public narrow = false;
@@ -79,8 +105,12 @@ class StoreDetailAddon extends LitElement {
   @state() private _appInfo?: AppInfo;
 
   protected render(): TemplateResult {
+    if (!this._appInfo) {
+      return html``;
+    }
+
     return html`
-      <hass-subpage .hass=${this.hass} .narrow=${this.narrow} .header=${this._appInfo?.appName}>
+      <hass-subpage .hass=${this.hass} .narrow=${this.narrow} .header=${this._appInfo.appName}>
         <div class="container">
           <div class="column small">
             <ha-card class="overview">
@@ -171,22 +201,34 @@ class StoreDetailAddon extends LitElement {
             <ha-card>
               <div class="header">
                 <h1 class="card-header">${this._appInfo?.appName}</h1>
-                <ha-icon-button
-                  .path=${mdiStarCheck}
-                  @click=${this._show}
-                  label="收藏"
-                ></ha-icon-button>
+                <div>
+                  <ha-icon-button
+                    .path=${mdiStarCheck}
+                    @click=${this._show}
+                    label="收藏"
+                  ></ha-icon-button>
+                  <ha-icon-button
+                    .path=${mdiDotsVertical}
+                    @click=${this._show}
+                    label="收藏"
+                  ></ha-icon-button>
+                </div>
               </div>
 
               <div class="card-body">${this._appInfo?.appDesc}</div>
 
               <div class="card-actions">
-                <ha-button @click=${this._install}>立即下载</ha-button>
-                <ha-button @click=${this._install(true)}>普通下载</ha-button>
-                <ha-button @click=${this._install}>等待重新 HA</ha-button>
-                <ha-button @click=${this._install}>开始集成</ha-button>
-                <ha-button disabled>已安装</ha-button>
-                <ha-button style="float: right">卸载</ha-button>
+                ${this._appInfo.installed == false
+                  ? html`<ha-button @click=${this._download}>立即下载</ha-button>`
+                  : html`${this._appInfo.loaded == false
+                      ? html`<ha-button @click=${this._showRestartDialog}
+                          >等待 Home Assistant 重启生效</ha-button
+                        >`
+                      : html`${this._appInfo.integrated == false
+                          ? html`<ha-button @click=${this._addIntegration}>开始集成</ha-button>`
+                          : html`<ha-button @click=${this._integrationDetail}
+                              >查看集成详情<ha-svg-icon slot="icon" path=${mdiForward}></ha-svg-icon
+                            ></ha-button>`}`}`}
               </div>
             </ha-card>
             <ha-card class="outer" style="overflow: hidden;position: relative;">
@@ -269,11 +311,65 @@ class StoreDetailAddon extends LitElement {
 
     const addon = this.route.path.substring(1);
     console.log(addon);
+
+    subscribeEntityRegistry(this.hass.connection, (entries) => {
+      console.log("--------------" + entries.length);
+    });
+
+    this.hass.connection.subscribeEvents(async () => {
+      console.log("_________1");
+    }, "entity_registry_updated");
   }
 
-  private async _install(origin: boolean) {
-    const result = await downloadApp(this.hass, this._appInfo?.appId || "", origin);
-    console.log(result);
+  private async _download(ev) {
+    const result = await downloadApp(this.hass, this._appInfo!.appId);
+    if (result instanceof string) {
+      showToast(this, {
+        message: "下载 " + this._appInfo!["appName"] + " 发生错误：" + result,
+      });
+    } else {
+      this._appInfo = result;
+      await this._showRestartDialog(ev, "下载成功，需要重启 Home Assistant 才能生效！");
+    }
+  }
+
+  private async _showRestartDialog(ev, title) {
+    const confirmed = await showConfirmationDialog(this, {
+      title: title || this.hass.localize("ui.dialogs.restart.restart.confirm_title"),
+      text: this.hass.localize("ui.dialogs.restart.restart.confirm_description"),
+      confirmText: this.hass.localize("ui.dialogs.restart.restart.confirm_action"),
+      destructive: true,
+    });
+
+    if (!confirmed) {
+      return;
+    }
+
+    // this.closeDialog();
+
+    try {
+      await this.hass.callService("homeassistant", "restart");
+    } catch (err: any) {
+      showAlertDialog(this, {
+        title: this.hass.localize("ui.dialogs.restart.restart.failed"),
+        text: err.message,
+      });
+    }
+  }
+
+  private async _addIntegration(ev) {
+    showAddIntegrationDialog(this, {
+      domain: this._appInfo!["domain"] || undefined,
+    });
+  }
+
+  private async _integrationDetail(ev) {
+    navigate(`/config/integrations/integration/${this._appInfo!["domain"]}`);
+  }
+
+  private async _install() {
+    // await rebootHost(this.hass);
+    await this.hass.callService("homeassistant", "restart");
   }
 
   private _show() {

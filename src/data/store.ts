@@ -37,6 +37,10 @@ export interface AppInfo {
   domain: string | null;
   build_in: boolean;
 
+  installed: boolean;
+  loaded: boolean;
+  integrated: boolean;
+
   authors: string[];
   available_version: string;
   can_download: boolean;
@@ -51,7 +55,6 @@ export interface AppInfo {
   hide: boolean;
   homeassistant: string | null;
   installed_version: string;
-  installed: boolean;
   last_updated: string;
   local_path: string;
   new: boolean;

@@ -101,11 +101,10 @@ export const getAppInfo = async (hass: HomeAssistant, appId: string) =>
     appId,
   });
 
-export const downloadApp = async (hass: HomeAssistant, appId: string, origin: boolean) =>
+export const downloadApp = async (hass: HomeAssistant, appId: string) =>
   hass.connection.sendMessagePromise<AppInfo>({
     type: "hassbox/store/downloadApp",
     appId,
-    origin,
   });
 
 export const search = async (hass: HomeAssistant, search: string) =>
