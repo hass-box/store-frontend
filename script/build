@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 if [ ! -d "./node_modules" ]; then
     echo "Directory /node_modules DOES NOT exists."
     echo "Running yarn install"
-    yarn install
+    YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 fi
 
 ./node_modules/.bin/gulp build-hacs
