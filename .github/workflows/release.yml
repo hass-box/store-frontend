@@ -120,7 +120,7 @@ jobs:
           path: "dist/"
 
       - name: Publish dists to PyPI
-        uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450 # v1.8.14
+        uses: pypa/gh-action-pypi-publish@0ab0b79471669eb3a4d647e625009c62f9f3b241 # v1.10.1
 
       - name: Attest
         uses: actions/attest-build-provenance@49df96e17e918a15956db358890b08e61c704919 #v1.2.0
