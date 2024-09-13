@@ -13,38 +13,8 @@ env:
 permissions: {}
 
 jobs:
-  translations:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up the Lokalise CLI
-        uses: frenck/action-setup-lokalise@v1.0.1
-        with:
-          version: v2.6.10
-
-      - name: Download translations
-        run: |
-          lokalise2 \
-            --token "${{ secrets.lokalise_token }}" \
-            --project-id "854515055f679055040b37.42677693" \
-            file download \
-            --format json \
-            --unzip-to ./translations \
-            --export-empty-as skip \
-            --export-sort a_z \
-            --original-filenames=false  \
-            --bundle-structure %LANG_ISO%.%FORMAT%
-
-      - name: Upload dists
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: translations
-          path: ./translations
-          if-no-files-found: error
-          retention-days: 1
-
   build:
     runs-on: ubuntu-latest
-    needs: translations
     steps:
       - uses: actions/checkout@v4.1.6
         with:
@@ -65,12 +35,6 @@ jobs:
         run: |
           rm -R ./src/localize/languages/
           mkdir -p ./src/localize/languages/
-
-      - name: Download translations
-        uses: actions/download-artifact@v4.1.7
-        with:
-          name: translations
-          path: "./src/localize/languages/"
 
       - name: "Set version number"
         run: |
