@@ -52,6 +52,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install setuptools wheel twine
           script/bootstrap
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
       - name: Build
         run: script/build
