@@ -7,4 +7,4 @@ set -e
 cd "$(dirname "$0")/.."
 
 node ./script/merge_requirements.js
-yarn install
+YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
