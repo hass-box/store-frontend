@@ -313,7 +313,7 @@ class StoreDetailAddon extends LitElement {
     console.log(addon);
 
     subscribeEntityRegistry(this.hass.connection, (entries) => {
-      console.log("--------------" + entries.length);
+      console.log("--------------1111111111" + entries.length);
     });
 
     this.hass.connection.subscribeEvents(async () => {

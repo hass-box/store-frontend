@@ -72,7 +72,7 @@ const createHacsConfig = ({ isProdBuild, latestBuild, isStatsBuild, isTestBuild 
       latestBuild,
       isStatsBuild,
       isTestBuild,
-    })
+    }),
   );
 
 const bothBuilds = (createConfigFunc, params) => [
@@ -109,7 +109,7 @@ const prodBuild = (conf) =>
     webpack(
       conf,
       // Resolve promise when done. Because we pass a callback, webpack closes itself
-      doneHandler(resolve)
+      doneHandler(resolve),
     );
   });
 
@@ -118,7 +118,7 @@ gulp.task("webpack-watch-app", () => {
   webpack(
     process.env.ES5
       ? bothBuilds(createHacsConfig, { isProdBuild: false })
-      : createHacsConfig({ isProdBuild: false, latestBuild: true })
+      : createHacsConfig({ isProdBuild: false, latestBuild: true }),
   ).watch({ poll: isWsl }, doneHandler());
   gulp.watch(path.join(paths.translations_src, "en.json"), gulp.series("generate-translations"));
 });
@@ -129,8 +129,8 @@ gulp.task("webpack-prod-app", () =>
       isProdBuild: true,
       isStatsBuild: env.isStatsBuild(),
       isTestBuild: env.isTestBuild(),
-    })
-  )
+    }),
+  ),
 );
 
 module.exports = { createHacsConfig };
