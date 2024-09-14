@@ -20,12 +20,12 @@ gulp.task(
       "gen-dummy-icons-json",
       "gen-pages-app-dev",
       "build-locale-data",
-      "generate-translations"
+      // "generate-translations"
     ),
-    "build-translation-fingerprints",
+    // "build-translation-fingerprints",
     "copy-static-app",
-    "webpack-watch-app"
-  )
+    "webpack-watch-app",
+  ),
 );
 
 gulp.task(
@@ -41,6 +41,6 @@ gulp.task(
     "webpack-prod-app",
     // Don't compress running tests
     ...(env.isTestBuild() ? [] : ["compress-app"]),
-    "gen-pages-app-prod"
-  )
+    "gen-pages-app-prod",
+  ),
 );
