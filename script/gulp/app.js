@@ -20,9 +20,9 @@ gulp.task(
       "gen-dummy-icons-json",
       "gen-pages-app-dev",
       "build-locale-data",
-      // "generate-translations"
+      "generate-translations",
     ),
-    // "build-translation-fingerprints",
+    "build-translation-fingerprints",
     "copy-static-app",
     "webpack-watch-app",
   ),
