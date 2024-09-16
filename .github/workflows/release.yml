@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4.0.2
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: yarn
+          # cache: yarn
 
       - name: Clear target directory
         run: |
